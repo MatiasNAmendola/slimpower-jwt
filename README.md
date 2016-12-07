@@ -32,7 +32,7 @@ Or you can add use this as your composer.json:
 
 ##SlimPower - JWT
 
-Please see [License File](JWTEXAMPLE.md)
+Please see [Example](JWTEXAMPLE.md)
 
 ##Security
 
