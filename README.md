@@ -17,26 +17,22 @@ A simple library to encode and decode JSON Web Tokens (JWT) in PHP, conforming t
 In terminal, use composer to manage your dependencies and download 'Slimpower JWT':
 
 ```bash
-
 composer require matiasnamendola/slimpower-jwt
-
 ```
 
 Or you can add use this as your composer.json:
 
 ```json
-    {
-        "require": {
-            "matiasnamendola/slimpower-jwt": "dev-master"
-        }
+{
+    "require": {
+        "matiasnamendola/slimpower-jwt": "dev-master"
     }
-
+}
 ```
 
 ##Example
 
 ```php
-
 <?php
 
 use \SlimPower\JWT\JWT;
