@@ -2,7 +2,7 @@
     "name": "matiasnamendola/slimpower-jwt",
     "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
     "keywords": [
-        "jwt", "json", "API"
+        "php", "jwt", "json", "api"
     ],
     "homepage": "https://github.com/matiasnamendola/slimpower-jwt",
     "type": "library",
@@ -24,6 +24,5 @@
         "psr-4": {
             "SlimPower\\JWT\\": "src"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
