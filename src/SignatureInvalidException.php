@@ -1,8 +1,6 @@
 <?php
 
 /**
- * This file is part of Slim JSON Web Token Authentication middleware
- *
  * JSON Web Token implementation, based on this spec:
  * http://tools.ietf.org/html/draft-ietf-oauth-json-web-token-06
  *
@@ -40,31 +38,6 @@
 
 namespace SlimPower\JWT;
 
-interface ManagerInterface {
-
-    public function start();
-
-    public static function getInstance(\SlimPower\Slim\Slim $app, AuthenticatorInterface $iauth);
-
-    public function getAuthorization();
-
-    public function getAppSecure();
-
-    public function addTokenRelaxed(array $tokenRelaxed = array());
-
-    public function getTokenRelaxed();
-
-    public function addInsecurePaths(array $insecurePaths = array());
-
-    public function getInsecurePaths();
-
-    public function setTokenSecret($tokenSecret);
-
-    public function getTokenSecret();
-
-    public function setTokenValidity($tokenValidity);
-
-    public function getTokenValidity();
-
-    public function generateToken(array $data = array());
+class SignatureInvalidException extends \UnexpectedValueException {
+    
 }

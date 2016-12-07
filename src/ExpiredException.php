@@ -1,8 +1,6 @@
 <?php
 
 /**
- * This file is part of Slim JSON Web Token Authentication middleware
- *
  * JSON Web Token implementation, based on this spec:
  * http://tools.ietf.org/html/draft-ietf-oauth-json-web-token-06
  *
@@ -40,43 +38,6 @@
 
 namespace SlimPower\JWT;
 
-use SlimPower\BasicAuth\HttpBasicAuthentication\AuthenticatorInterface as BasicInterface;
-
-interface AuthenticatorInterface extends BasicInterface {
-
-    /**
-     * Get error code
-     * @return int
-     */
-    public function getErrorCode();
-
-    /**
-     * Get error message
-     * @return string
-     */
-    public function getErrorMessage();
-
-    /**
-     * Has error?
-     * @return boolean
-     */
-    public function hasError();
-
-    /**
-     * Get interaction token
-     * @return string
-     */
-    public function getToken();
-
-    /**
-     * Set token
-     * @param string $token Token
-     */
-    public function setToken($token);
-
-    /**
-     * Validate token
-     * @return boolean
-     */
-    public function validToken();
+class ExpiredException extends \UnexpectedValueException {
+    
 }

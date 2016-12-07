@@ -38,10 +38,6 @@
 
 namespace SlimPower\JWT;
 
-use SlimPower\JWT\Exception\SignatureInvalidException;
-use SlimPower\JWT\Exception\BeforeValidException;
-use SlimPower\JWT\Exception\ExpiredException;
-
 class JWT {
 
     /**

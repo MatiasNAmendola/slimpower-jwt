@@ -1,8 +1,6 @@
 <?php
 
-/*
- * This file is part of Slim JSON Web Token Authentication middleware
- *
+/**
  * JSON Web Token implementation, based on this spec:
  * http://tools.ietf.org/html/draft-ietf-oauth-json-web-token-06
  *
@@ -38,9 +36,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace SlimPower\JWT\Authentication;
+namespace SlimPower\JWT;
 
-interface RuleInterface {
-
-    public function __invoke(\Slim\Slim $app);
+class BeforeValidException extends \UnexpectedValueException {
+    
 }
