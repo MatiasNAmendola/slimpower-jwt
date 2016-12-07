@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of Slim JSON Web Token Authentication middleware
  *
  * JSON Web Token implementation, based on this spec:
@@ -38,16 +38,19 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Slim\Middleware;
+namespace SlimPower\JWT;
 
-use SlimPower\JWT\Authentication\RequestMethodRule;
-use SlimPower\JWT\Authentication\RequestPathRule;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use SlimPower\JWT\JWT;
 
 class JwtAuthentication extends \Slim\Middleware {
 
+    /**
+     * AuthenticatorInterface
+     * @var \SlimPower\JWT\AuthenticatorInterface
+     */
+    protected $authenticationInterface = null;
     protected $logger;
     protected $message; /* Last error message. */
     private $options = array(
@@ -57,13 +60,16 @@ class JwtAuthentication extends \Slim\Middleware {
         "cookie" => "token",
         "path" => null,
         "callback" => null,
-        "error" => null
+        "error" => null,
+        "warningPaths" => null
     );
 
     /**
      * Create a new JwtAuthentication Instance
+     * @param \SlimPower\JWT\AuthenticatorInterface $authenticationInterface
+     * @param array $options
      */
-    public function __construct($options = array()) {
+    public function __construct(AuthenticatorInterface $authenticationInterface, $options = array()) {
         /* Setup stack for rules */
         $this->rules = new \SplStack;
 
@@ -72,16 +78,37 @@ class JwtAuthentication extends \Slim\Middleware {
 
         /* If nothing was passed in options add default rules. */
         if (!isset($options["rules"])) {
-            $this->addRule(new RequestMethodRule(array(
+            $this->addRule(new Authentication\RequestMethodRule(array(
                 "passthrough" => array("OPTIONS")
             )));
         }
 
         /* If path was given in easy mode add rule for it. */
         if (null !== ($this->options["path"])) {
-            $this->addRule(new RequestPathRule(array(
+            $this->addRule(new Authentication\RequestPathRule(array(
                 "path" => $this->options["path"]
             )));
+        }
+
+        $this->authenticationInterface = $authenticationInterface;
+    }
+
+    /**
+     * Valid JWT from AuthenticationInterface
+     * @param string $token JWT.
+     * @return bool
+     */
+    private function validFromAuthInterface($token) {
+        $this->authenticationInterface->setToken($token);
+        $this->authenticationInterface->validToken();
+
+        if ($this->authenticationInterface->hasError()) {
+            //$errCode = $this->authenticationInterface->getErrorCode();
+            $this->message = $this->authenticationInterface->getErrorMessage();
+            $this->log(LogLevel::WARNING, $this->message, array($token));
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -108,8 +135,33 @@ class JwtAuthentication extends \Slim\Middleware {
             }
         }
 
+        $uri = $this->app->request->getResourceUri();
+
+        $freePass = false;
+
+        /* If request path is matches warningPaths should not authenticate. */
+        foreach ((array) $this->options["warningPaths"] as $warningPaths) {
+            $warningPaths = rtrim($warningPaths, "/");
+            if (!!preg_match("@^{$warningPaths}(/.*)?$@", $uri)) {
+                $freePass = true;
+            }
+        }
+
         /* If token cannot be found return with 401 Unauthorized. */
-        if (false === $token = $this->fetchToken()) {
+        if ((false === $token = $this->fetchToken()) && !$freePass) {
+            $this->app->response->status(401);
+            $this->error(array(
+                "message" => $this->message
+            ));
+            return;
+        }
+
+        if (false === $token && $freePass) {
+            $this->next->call();
+            return;
+        }
+
+        if (!$this->validFromAuthInterface($token)) {
             $this->app->response->status(401);
             $this->error(array(
                 "message" => $this->message
@@ -137,6 +189,9 @@ class JwtAuthentication extends \Slim\Middleware {
                 return;
             }
         }
+
+        /* Everything ok, add custom property! */
+        $this->app->jwtenc = $token;
 
         /* Everything ok, call next middleware. */
         $this->next->call();

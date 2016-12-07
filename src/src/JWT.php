@@ -1,11 +1,5 @@
 <?php
 
-namespace SlimPower\JWT;
-
-use SlimPower\JWT\Exception\SignatureInvalidException;
-use SlimPower\JWT\Exception\BeforeValidException;
-use SlimPower\JWT\Exception\ExpiredException;
-
 /**
  * JSON Web Token implementation, based on this spec:
  * http://tools.ietf.org/html/draft-ietf-oauth-json-web-token-06
@@ -41,6 +35,13 @@ use SlimPower\JWT\Exception\ExpiredException;
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
+namespace SlimPower\JWT;
+
+use SlimPower\JWT\Exception\SignatureInvalidException;
+use SlimPower\JWT\Exception\BeforeValidException;
+use SlimPower\JWT\Exception\ExpiredException;
+
 class JWT {
 
     /**

@@ -20,7 +20,8 @@
     "require": {
         "php": ">=5.3.0",        
         "psr/log": "~1.0",
-        "matiasnamendola/slimpower-slim": "master-dev"
+        "matiasnamendola/slimpower-slim": "master-dev",
+        "matiasnamendola/slimpower-basic-auth": "master-dev"
     },
     "autoload": {
         "psr-4": {
