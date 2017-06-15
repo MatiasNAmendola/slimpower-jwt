@@ -1,7 +1,7 @@
-#SlimPower - JWT
+# SlimPower - JWT
 
 [![Latest version][ico-version]][link-packagist]
-[comment]: # ([![Total Downloads][ico-downloads]][link-downloads])
+[![Total Downloads][ico-downloads]][link-downloads]
 
 [![Latest Stable Version](https://poser.pugx.org/matiasnamendola/slimpower-jwt/version?format=flat-square)](https://packagist.org/packages/matiasnamendola/slimpower-jwt) 
 [![Latest Unstable Version](https://poser.pugx.org/matiasnamendola/slimpower-jwt/v/unstable?format=flat-square)](//packagist.org/packages/matiasnamendola/slimpower-jwt) 
@@ -12,7 +12,7 @@
 
 A simple library to encode and decode JSON Web Tokens (JWT) in PHP, conforming to [RFC 7519](https://tools.ietf.org/html/rfc7519).
 
-##Installation
+## Installation
 
 In terminal, use composer to manage your dependencies and download 'Slimpower JWT':
 
@@ -30,7 +30,7 @@ Or you can add use this as your composer.json:
 }
 ```
 
-##Example
+## Example
 
 ```php
 <?php
@@ -77,16 +77,12 @@ $decoded = JWT::decode($jwt, $key, array('HS256'));
 ?>
 ```
 
-##Security
-
-If you discover any security related issues, please email [soporte.esolutions@gmail.com](mailto:soporte.esolutions@gmail.com?subject=[SECURITY] Config Security Issue) instead of using the issue tracker.
-
-##Credits
+## Credits
 
 - [Matías Nahuel Améndola](https://github.com/matiasnamendola)
 - [Franco Soto](https://github.com/francosoto)
 
-##License
+## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
